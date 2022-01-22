@@ -158,12 +158,13 @@ class Auth
         $data = [
             'mobile'   => $mobile,
             'password' => $this->getEncryptPassword($extend['password'],$salt),
-//            'email'    => $extend['email'] ?? '',
+            'email'    => $extend['email'] ?? '',
 //            'pay_password'  => $this->getEncryptPassword($extend['password'],$salt),
             //'level'    => 1,
 //            'score'    => 0,
+            'username'  => isset($extend['username']) && !empty($extend['username'])?$extend['username']:substr_replace($mobile,'****',3,4),
             'nickname' => substr_replace($mobile,'****',3,4),
-            'avatar'   => Env::get('user.defaultAvatar'),
+            'avatar'   => Env::get('user.defaultAvatar') .'.png',
         ];
         if(isset($extend['invite_code'])){
             $data['parent'] = $parent->id;
