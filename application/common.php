@@ -48,6 +48,47 @@ if (!function_exists('format_bytes')) {
     }
 }
 
+if(!function_exists('buildPartitionSql')){
+
+    /** *
+     * 构造获取总记录数及主键ID的sql子查询语句 * @param
+     * $table 主表名称 * @param
+     * $idKey 主键id字段名称 *
+     * @param string $fields 其它字段名称,多个字段用英文逗号分隔 *
+     * @param int $num 子表数量 * @param string $where 查询条件 * @return array
+     */
+    function buildPartitionSql($table,$fields='',$num=1,$where='',$alias) {
+
+
+
+
+
+        $listTable = [];
+
+        for ($i = 0; $i < $num; $i++) {
+
+            $istable = \think\Db::query('SHOW TABLES like "'.$table.'_'.($i + 1).'"');
+
+            if(!empty($istable)) {
+
+                $listTable[] = sprintf('SELECT %s FROM %s_%s where 1=1 %s', $fields, $table, ($i + 1), $where);
+
+            }
+
+        }
+
+        /*if(!empty($listTable)){
+
+            $listTable = '( ' . implode(" UNION ALL ", $listTable) . ') AS ' . $alias;
+
+        }*/
+
+
+        return $listTable;
+    }
+
+}
+
 if (!function_exists('datetime')) {
 
     /**

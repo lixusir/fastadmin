@@ -18,10 +18,13 @@ class UserMoneyLog extends BaseModel
 
     protected $updateTime = false;
 
-    public static function setlog($user_id,$money,$memo){
+
+    public function setlog($user_id,$money,$memo){
+
 
 
         $table = Env::get('database.prefix').'user_money_log'.bcadd($user_id%20,1);
+
 
         $count = Db::query("SELECT count(*) as c FROM information_schema.TABLES t WHERE t.TABLE_NAME = '". $table ."'");
 
@@ -35,19 +38,40 @@ class UserMoneyLog extends BaseModel
                           `after` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '变更后余额',
                           `memo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '备注',
                           `createtime` int(10) NULL DEFAULT NULL COMMENT '创建时间',
+                          
                           PRIMARY KEY (`id`) USING BTREE
-                        ) ENGINE = InnoDB AUTO_INCREMENT = 11000002 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员余额变动表' ROW_FORMAT = DYNAMIC;";
+                        ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '会员余额变动表' ROW_FORMAT = DYNAMIC;";
 
             Db::query($sql);
 
         }
 
-        $res = Db::table($table)->insert([
+        $table_id = intval(TableId::where(['table'=>'user_money_log'])->value('num'));
+
+        $int_data = [
+            'id'        => bcadd($table_id,1),
             'user_id'   => $user_id,
             'money'     => $money,
             'memo'      => $memo,
             'createtime'=> time()
-        ]);
+        ];
+
+
+        $res = Db::table($table)->insert($int_data);
+
+        if($table_id <= 0){
+
+            TableId::create([
+                'table' => 'user_money_log',
+                'num'   => bcadd($table_id,1),
+            ]);
+
+        }else{
+
+
+            TableId::where(['table'=>'user_money_log'])->update(['num'=>bcadd($table_id,1)]);
+
+        }
 
         dump($res);
 

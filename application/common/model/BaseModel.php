@@ -17,4 +17,13 @@ class BaseModel extends Model{
     protected $createTime = 'create_time';
     protected $updateTime = false;
     protected $deleteTime = 'deleted_time';
+
+
+    public function __construct($data = [],$db_key=1)
+    {
+        $this->connection = 'db'.$db_key%2;
+
+        parent::__construct($data);
+    }
+
 }

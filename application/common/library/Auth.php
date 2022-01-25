@@ -100,7 +100,7 @@ class Auth
         }
         $user_id = intval($data['user_id']);
         if ($user_id > 0) {
-            $user = User::get($user_id);
+            $user = User::get($user_id,[],false,true);
             if (!$user) {
                 $this->setError('Account not exist');
                 return false;
@@ -141,7 +141,10 @@ class Auth
         }
 
         if(isset($extend['invite_code'])){
-            $parent = User::getByInviteCode($extend['invite_code']);
+
+            $parent = Db::table('fa_user_2')->where('invite_code','=',$extend['invite_code'])->union(buildPartitionSql('fa_user','*',15,' and invite_code = "'.$extend['invite_code'].'"','user'),true)->find();
+
+
             if(isset($extend['invite_code']) && empty($extend['invite_code'])){
                 unset($extend['invite_code']);
             }
@@ -167,8 +170,8 @@ class Auth
             'avatar'   => Env::get('user.defaultAvatar') .'.png',
         ];
         if(isset($extend['invite_code'])){
-            $data['parent'] = $parent->id;
-            $data['chain'] = $parent->chain . ',' . $parent->id;
+            $data['parent'] = $parent['id'];
+            $data['chain'] = $parent['chain'] . ',' . $parent['id'];
         }else{
             $data['parent'] = 0;
             $data['chain'] = 0;
@@ -189,7 +192,10 @@ class Auth
         try {
             $user = User::create($params, true);
 
-            $this->_user = User::get($user->id);
+            User::add_user($params,$user->id);
+
+            $this->_user = User::get($user->id,[],false,true);
+
 
             //设置Token
             $this->_token = Random::uuid();
@@ -218,7 +224,7 @@ class Auth
     {
         //$field = Validate::is($account, 'email') ? 'email' : (Validate::regex($account, '/^1\d{10}$/') ? 'mobile' : 'username');
         $field = 'mobile';
-        $user = User::get([$field => $account]);
+        $user = User::get([$field => $account],[],false,true);
         if (!$user) {
             $this->setError('Account is incorrect');
             return false;
@@ -303,7 +309,7 @@ class Auth
      */
     public function direct($user_id)
     {
-        $user = User::get($user_id);
+        $user = User::get($user_id,[],false,true);
         if ($user) {
             Db::startTrans();
             try {
@@ -463,7 +469,7 @@ class Auth
      */
     public function delete($user_id)
     {
-        $user = User::get($user_id);
+        $user = User::get($user_id,[],false,true);
         if (!$user) {
             return false;
         }

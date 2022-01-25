@@ -24,33 +24,34 @@ class Cs  extends Command
     protected function execute(Input $input, Output $output)
     {
 
-        $data = [];
 
-        for($i = 1;$i<=350000;$i++){
+        $usermoneylog = new UserMoneyLog([],2);
 
-           $data[] = [
-               'user_id'    => $i,
-               'money'      => rand(1,999),
-               'before'     => rand(1,999),
-               'after'      => rand(1,999),
-               'memo'       => 'cs',
-               'createtime' => time()
-           ];
+        $usermoneylog->setlog(1,rand(1,999),'测试');
 
-        }
+        /*for($o=1;$o<=5000;$o++){
 
-        $res = (new UserMoneyLog())->insertAll($data);
+            for($j=1;$j<=50;$j++){
+
+                UserMoneyLog::setlog($j,rand(1,999),'测试');
+
+            }
+
+        }die('ok');*/
 
 
+        /*$money_list = $this->buildPartitionSql('fa_user_money_log','id,user_id,money',20,'','log');
 
-        $res = Db::query("select * from ".$table." where id in ( "."select id from (select id from ".$table." limit 1,10 ".") as t"." ) ");
+        $pindex = 1;
 
-//        $res = UserMoneyLog::order('id desc')->paginate(15);
+        $psize = 20;
 
-        dump($res);die;
+        $count = Db::query("select count(*) from ".$money_list." ");
+
+        $list = Db::query("select * from ".$money_list." where id in (select id from (select id from ".$money_list." order by id desc  limit 400000,10 ) as t  ) order by id desc ");*/
 
 
-        dump($this->buildPartitionSql('log','user_id'));die;
+
 
 
 
@@ -66,23 +67,19 @@ class Cs  extends Command
      * @param string $fields 其它字段名称,多个字段用英文逗号分隔 *
      * @param int $num 子表数量 * @param string $where 查询条件 * @return array
      */
-    function buildPartitionSql($table,$idKey,$fields='',$num=1,$where='') {
-        $countTable = [];
+    function buildPartitionSql($table,$fields='',$num=1,$where='',$alias) {
+
         $listTable = [];
-        $fieldList = [$idKey];
-        if ($fields) {
-            $fieldList = array_merge($fieldList,explode(',',$fields));
-            $fieldList = array_unique($fieldList);
-        }
-        $fieldStr = implode(',',$fieldList);
+
         for ($i = 0; $i < $num; $i++) {
-            $countTable[] = sprintf('SELECT %s FROM %s_%s where 1=1 %s', $idKey, $table, ($i + 1), $where);
-            $listTable[] = sprintf('SELECT %s FROM %s_%s where 1=1 %s', $fieldStr,$table, ($i + 1), $where);
+
+            $listTable[] = sprintf('SELECT %s FROM %s%s where 1=1 %s', $fields,$table, ($i + 1), $where);
+
         }
-        $countTable = '( ' . implode(" UNION ", $countTable) . ') AS ' . $table;
-        $listTable = '( ' . implode(" UNION ", $listTable) . ') AS ' . $table;
-        $tables = ['countSql' => $countTable, 'listSql' => $listTable];
-        return $tables;
+
+        $listTable = '( ' . implode(" UNION ALL ", $listTable) . ') AS ' . $alias;
+
+        return $listTable;
     }
 
 }

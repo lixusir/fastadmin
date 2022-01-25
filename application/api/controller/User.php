@@ -114,6 +114,7 @@ class User extends Api
         $email = $this->request->post('email');
         $mobile = $this->request->post('mobile');
         $code = $this->request->post('code');
+        $invite_code = $this->request->post('invite_code');
         if (!$username || !$password) {
             $this->error(__('Invalid parameters'));
         }
@@ -123,11 +124,19 @@ class User extends Api
         if ($mobile && !Validate::regex($mobile, "^1\d{10}$")) {
             $this->error(__('Mobile is incorrect'));
         }
-        $ret = Sms::check($mobile, $code, 'register');
+       /* $ret = Sms::check($mobile, $code, 'register');
         if (!$ret) {
             $this->error(__('Captcha is incorrect'));
-        }
-        $ret = $this->auth->register($username, $password, $email, $mobile, []);
+        }*/
+
+        $extend = [
+            'username'      => $username,
+            'password'      => $password,
+            'invite_code'   => $invite_code,
+        ];
+
+        $ret = $this->auth->register($mobile,$extend);
+
         if ($ret) {
             $data = ['userinfo' => $this->auth->getUserinfo()];
             $this->success(__('Sign up successful'), $data);
