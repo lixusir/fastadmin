@@ -34,7 +34,11 @@
         "alibabacloud/client": "^1.5"
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "easywechat-composer/easywechat-composer": true,
+            "topthink/think-installer": true
+        }
     },
     "repositories": [
         {
