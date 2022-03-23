@@ -1,0 +1,368 @@
+<!doctype html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>领域通</title>
+    <link rel="shortcut icon" href="__CDN__/assets/img/favicon.ico" />
+    <!-- Bootstrap Core CSS -->
+    <link href="__CDN__/assets/libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__CDN__/assets/css/index.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+
+    <![endif]-->
+</head>
+<html>
+
+<style type="text/css">
+
+    body{ background-color: #f0ad4e }
+
+</style>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title>膳美康</title>
+
+    <style type="text/css">
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            list-style-type: none;
+
+        }
+
+        a, img {
+
+            border: 0;
+
+            text-decoration: none;
+
+        }
+
+        body {
+
+            font-family: "微软雅黑", "宋体", "黑体", Arial;
+
+        }
+
+        /* focus */
+
+        .xmSlide {
+
+            /*background-color: #022c5e;*/
+
+        }
+
+        .xmSlide_01 {
+
+            height: 639px;
+
+            background: url(__CDN__/assets/demo/images/gw2.png) no-repeat center center;
+
+        }
+
+        .xmSlide_02 {
+
+            height: 639px;
+
+            background: url(__CDN__/assets/demo/images/gw2.png) no-repeat center center;
+
+        }
+
+        .xmSlide_03 {
+
+            height: 639px;
+
+            background: url(__CDN__/assets/demo/images/gw2.png) no-repeat center center;
+
+        }
+
+        .xmSlide_04 {
+
+            height: 639px;
+
+            background: url(__CDN__/assets/demo/images/gw2.png) no-repeat center center;
+
+        }
+
+        .xmSlide_05 {
+
+            height: 639px;
+
+            background: url(__CDN__/assets/demo/images/gw2.png) no-repeat center center;
+
+        }
+
+        .xmSlide-pagination {
+
+            background-color: #f0ad4e;
+
+            padding-top: 10px;
+
+            text-align: center;
+
+            height: 20px;
+
+        }
+
+        .xmSlide-pagination li {
+
+            display: inline-block;
+
+            width: 12px;
+
+            height: 12px;
+
+            margin: 0 5px;
+
+        }
+
+        .xmSlide-pagination li a {
+
+            display: inline-block;
+
+            width: 12px;
+
+            height: 12px;
+
+            text-indent: -9999px;
+
+            background-color: #ccd1d9;
+
+            border-radius: 8px;
+
+            -moz-border-radius: 8px;
+
+            -webkit-border-radius: 8px;
+
+            overflow: hidden;
+
+        }
+
+        .xmSlide-pagination li a.active {
+
+            background-color: #656d78;
+
+        }
+
+        .xmSlide-control {
+
+            overflow: hidden;
+
+        }
+
+        .btn {
+
+            width: 950px;
+
+            position: absolute;
+
+            left: 50%;
+
+            margin-left: -475px;
+
+            top: 0;
+
+            z-index: 9999;
+
+        }
+
+        .btn span {
+
+            display: block;
+
+            text-align: right;
+
+            padding-right: 158px;
+
+        }
+
+        .btn p {
+
+            padding: 410px 78px 0 0;
+
+            text-align: right;
+
+        }
+
+        .btn p a {
+
+            width: 133px;
+
+            height: 36px;
+
+            display: inline-block;
+
+            margin-right: 10px;
+
+            line-height: 36px;
+
+            font-size: 14px;
+
+            color: #fff;
+
+            text-align: center;
+
+            -webkit-border-radius: 4px;
+
+            -moz-border-radius: 4px;
+
+            border-radius: 4px;
+
+        }
+
+        .btn p a.item1 {
+
+            background-color: #ff9000;
+
+            -webkit-box-shadow: 0 2px rgba(13,47,88,.19);
+
+            -moz-box-shadow: 0 2px rgba(13,47,88,.19);
+
+            box-shadow: 0 2px rgba(13,47,88,.19);
+
+        }
+
+        .btn p a.item2 {
+
+            background-color: #5e95e1;
+
+            -webkit-box-shadow: 0 2px rgba(13,47,88,.19);
+
+            -moz-box-shadow: 0 2px rgba(13,47,88,.19);
+
+            box-shadow: 0 2px rgba(13,47,88,.19);
+
+        }
+
+    </style>
+
+    <script type="text/javascript" src="__CDN__/assets/demo/js/jquery18.js"></script>
+
+    <script type="text/javascript" src="__CDN__/assets/demo/js/slides.js"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+
+            $("#xmSlide").xmSlide({
+
+                width: 950,
+
+                height: 639,
+
+                responsiveWidth:710,
+
+                pagination: {
+
+                    effect: "fade"  //可换成"slide"
+
+                },
+
+                effect: {
+
+                    fade: {
+
+                        speed: 400
+
+                    }
+
+                },
+
+                play: {
+
+                    effect: "fade", //可换成"slide"
+
+                    interval: 4000,
+
+                    auto: true,
+
+                    pauseOnHover: true,
+
+                    restartDelay: 2500
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-menu">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand page-scroll" href="#page-top">领域通</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-menu">
+            <ul class="nav navbar-nav navbar-right">
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <div class="focus">
+
+        <div id="xmSlide" class="xmSlide">
+
+            <div class="xmSlide_01"></div>
+
+            <div class="xmSlide_02"></div>
+
+            <div class="xmSlide_03"></div>
+
+            <div class="xmSlide_04"></div>
+
+            <div class="xmSlide_05"></div>
+
+        </div>
+
+    </div>
+    <footer>
+
+        <div class="container">
+            <p>安庆膳美康电子商务有限公司</p>
+            <p> 营业执照：91340803MA8N9CQ691(1-1)</p>
+            <p>   备案号：皖ICP备2022002248号-1</p>
+            <p> 地址：安徽省安庆市大观区环城西路与丁香路交叉口皖西南物流园综合楼八楼</p>
+            <p>   QQ:1952526</p>
+            <p></p> 邮箱：aqshanmeikang@163.com
+
+        </div>
+    </footer>
+    <!-- /.container-fluid -->
+</nav>
+
+
+
+<script src="http://www.jq22.com/js/jq.js"></script>
+
+
+
+</body>
+
+</html>
